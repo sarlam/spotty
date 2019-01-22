@@ -123,7 +123,6 @@ jobs:
         - node_modules
         key: v1-dependencies-{{ checksum "package.json" }}
 
-    - run: yarn test:unit
     - run: yarn test:e2e --headless
     - run: yarn test:e2e:report
     - run: ./tmp/cc-test-reporter format-coverage -t lcov -o tmp/codeclimate.e2e.json coverage/lcov.info
@@ -133,9 +132,12 @@ jobs:
     # specify the version you desire here
     - image: circleci/node:10.14
 
+    working_directory: ~/repo
+
     steps:
     - attach_workspace:
         at: ~/repo/tmp
+
     - run:
         name: Upload coverage results to Code Climate
         command: |
