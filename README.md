@@ -1,4 +1,6 @@
 # Spotty
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fsarlam%2Fspotty.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fsarlam%2Fspotty?ref=badge_shield)
+
 
 ## Abstract
 
@@ -43,3 +45,7 @@ yarn test:unit
 ```
 yarn test:e2e
 ```
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fsarlam%2Fspotty.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fsarlam%2Fspotty?ref=badge_large)
