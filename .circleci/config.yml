@@ -209,7 +209,7 @@ workflows:
     jobs:
     - lint
     - pre_test:
-        require:
+        requires:
         - lint
     - test_unit:
         requires:
