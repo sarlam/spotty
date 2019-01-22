@@ -222,8 +222,8 @@ workflows:
         - test_unit
         - test_e2e
     - build_web:
-        require:
+        requires:
         - post_test
     - build_electron:
-        require:
+        requires:
         - post_test
