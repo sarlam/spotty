@@ -208,23 +208,22 @@ workflows:
   lint_test_build_all:
     jobs:
     - lint
-    - pre_test
+    - pre_test:
+        require:
+        - lint
     - test_unit:
         requires:
         - pre_test
     - test_e2e:
         requires:
         - pre_test
-
     - post_test:
         requires:
         - test_unit
         - test_e2e
-
     - build_web:
         require:
         - post_test
-
     - build_electron:
         require:
         - post_test
