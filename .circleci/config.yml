@@ -68,8 +68,7 @@ jobs:
 
   test_e2e:
     docker:
-    # specify the version you desire here
-    - image: circleci/node:10.14
+    - image: cypress/base:10
 
     # Specify service dependencies here if necessary
     # CircleCI maintains a library of pre-built images
@@ -130,7 +129,8 @@ jobs:
 
   build_electron:
     docker:
-    - image: cypress/base:10
+    # specify the version you desire here
+    - image: circleci/node:10.14
 
     # Specify service dependencies here if necessary
     # CircleCI maintains a library of pre-built images
