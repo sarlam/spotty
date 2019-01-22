@@ -16,5 +16,42 @@
 // Import commands.js using ES2015 syntax:
 import './commands'
 
+import { isEmpty } from 'lodash'
+
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
+
+// Gather nyc coverage reports
+const istanbul = require('istanbul-lib-coverage');
+
+const map = istanbul.createCoverageMap({});
+
+const NYC_OUTPUT = '.nyc_output/out.json';
+
+before(() => {
+  cy.readFile(NYC_OUTPUT).then(storedIstanbulMap => {
+    if (!isEmpty(storedIstanbulMap)) {
+      map.merge(storedIstanbulMap);
+    }
+  });
+});
+
+Cypress.on('window:before:unload', e => {
+  const coverage = e.currentTarget.__coverage__;
+
+  if (coverage) {
+    map.merge(coverage);
+  }
+});
+
+after(() => {
+  cy.window().then(win => {
+    const coverage = win.__coverage__;
+
+    if (coverage) {
+      map.merge(coverage);
+    }
+
+    cy.writeFile(NYC_OUTPUT, JSON.stringify(map));
+  });
+});
