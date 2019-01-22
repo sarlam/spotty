@@ -2,7 +2,7 @@ const path = require('path')
 
 module.exports = {
   chainWebpack: config => {
-    const IAddIstanbul = process.env.NODE_ENV === "test";
+    const IAddIstanbul = process.env.VUE_APP_WITH_ISTANBUL === "true";
 
     if (IAddIstanbul) {
       config.devtool('eval')
