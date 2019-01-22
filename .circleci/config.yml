@@ -125,7 +125,7 @@ jobs:
 
     - run: yarn test:e2e --headless
     - run: nyc report --reporter=lcov
-      - run: ./tmp/cc-test-reporter format-coverage -t lcov -o tmp/codeclimate.e2e.json coverage/lcov.info
+    - run: ./tmp/cc-test-reporter format-coverage -t lcov -o tmp/codeclimate.e2e.json coverage/lcov.info
 
   post_test:
     docker:
