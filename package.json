@@ -57,7 +57,7 @@
   "main": "background.js",
   "nyc": {
     "include": [
-      "src/**/*.{js,vue}"
+      "src/**/*"
     ],
     "reporter": [
       "lcov",
