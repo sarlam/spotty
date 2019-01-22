@@ -2,7 +2,7 @@
 #
 # Check https://circleci.com/docs/2.0/language-javascript/ for more details
 #
-version: 2.1
+version: 2
 jobs:
   lint:
     docker:
@@ -159,7 +159,7 @@ jobs:
     - run: yarn electron:build
 
 workflows:
-  version: 2.1
+  version: 2
   lint_test_build_all:
     jobs:
     - lint
