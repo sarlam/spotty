@@ -92,6 +92,10 @@ jobs:
 
     - run: yarn test:unit
     - run: ./tmp/cc-test-reporter format-coverage -t lcov -o tmp/codeclimate.unit.json coverage/lcov.info
+    - persist_to_workspace:
+        root: tmp
+        paths:
+        - codeclimate.unit.json
 
   test_e2e:
     docker:
@@ -126,6 +130,10 @@ jobs:
     - run: yarn test:e2e --headless
     - run: yarn test:e2e:report
     - run: ./tmp/cc-test-reporter format-coverage -t lcov -o tmp/codeclimate.e2e.json coverage/lcov.info
+    - persist_to_workspace:
+        root: tmp
+        paths:
+        - codeclimate.e2e.json
 
   post_test:
     docker:
