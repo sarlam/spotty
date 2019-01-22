@@ -123,6 +123,7 @@ jobs:
         - node_modules
         key: v1-dependencies-{{ checksum "package.json" }}
 
+    - run: yarn test:unit
     - run: yarn test:e2e --headless
     - run: yarn test:e2e:report
     - run: ./tmp/cc-test-reporter format-coverage -t lcov -o tmp/codeclimate.e2e.json coverage/lcov.info
