@@ -4,7 +4,7 @@
 #
 version: 2
 jobs:
-  build:
+  lint:
     docker:
     # specify the version you desire here
     - image: circleci/node:10.14
@@ -33,8 +33,148 @@ jobs:
         - node_modules
         key: v1-dependencies-{{ checksum "package.json" }}
 
-    # run tests!
+    - run: yarn lint
+
+  test_unit:
+    docker:
+    # specify the version you desire here
+    - image: circleci/node:10.14
+
+    # Specify service dependencies here if necessary
+    # CircleCI maintains a library of pre-built images
+    # documented at https://circleci.com/docs/2.0/circleci-images/
+    # - image: circleci/mongo:3.4.4
+
+    working_directory: ~/repo
+
+    steps:
+    - checkout
+
+    # Download and cache dependencies
+    - restore_cache:
+        keys:
+        - v1-dependencies-{{ checksum "package.json" }}
+        # fallback to using the latest cache if no exact match is found
+        - v1-dependencies-
+
+    - run: yarn install
+
+    - save_cache:
+        paths:
+        - node_modules
+        key: v1-dependencies-{{ checksum "package.json" }}
+
     - run: yarn test:unit
-    - run: yarn test:e2e
 
+  test_e2e:
+    docker:
+    # specify the version you desire here
+    - image: circleci/node:10.14
 
+    # Specify service dependencies here if necessary
+    # CircleCI maintains a library of pre-built images
+    # documented at https://circleci.com/docs/2.0/circleci-images/
+    # - image: circleci/mongo:3.4.4
+
+    working_directory: ~/repo
+
+    steps:
+    - checkout
+
+    # Download and cache dependencies
+    - restore_cache:
+        keys:
+        - v1-dependencies-{{ checksum "package.json" }}
+        # fallback to using the latest cache if no exact match is found
+        - v1-dependencies-
+
+    - run: yarn install
+
+    - save_cache:
+        paths:
+        - node_modules
+        key: v1-dependencies-{{ checksum "package.json" }}
+
+    - run: yarn test:e2e --headless
+
+  build_web:
+    docker:
+    # specify the version you desire here
+    - image: circleci/node:10.14
+
+    # Specify service dependencies here if necessary
+    # CircleCI maintains a library of pre-built images
+    # documented at https://circleci.com/docs/2.0/circleci-images/
+    # - image: circleci/mongo:3.4.4
+
+    working_directory: ~/repo
+
+    steps:
+    - checkout
+
+    # Download and cache dependencies
+    - restore_cache:
+        keys:
+        - v1-dependencies-{{ checksum "package.json" }}
+        # fallback to using the latest cache if no exact match is found
+        - v1-dependencies-
+
+    - run: yarn install
+
+    - save_cache:
+        paths:
+        - node_modules
+        key: v1-dependencies-{{ checksum "package.json" }}
+
+    - run: yarn build
+
+  build_electron:
+    docker:
+    # specify the version you desire here
+    - image: circleci/node:10.14
+
+    # Specify service dependencies here if necessary
+    # CircleCI maintains a library of pre-built images
+    # documented at https://circleci.com/docs/2.0/circleci-images/
+    # - image: circleci/mongo:3.4.4
+
+    working_directory: ~/repo
+
+    steps:
+    - checkout
+
+    # Download and cache dependencies
+    - restore_cache:
+        keys:
+        - v1-dependencies-{{ checksum "package.json" }}
+        # fallback to using the latest cache if no exact match is found
+        - v1-dependencies-
+
+    - run: yarn install
+
+    - save_cache:
+        paths:
+        - node_modules
+        key: v1-dependencies-{{ checksum "package.json" }}
+
+    - run: yarn electron:build
+
+workflows:
+  version: 2
+  lint_test_build_all:
+    jobs:
+    - lint
+    - test_unit:
+        requires:
+        - lint
+    - test_e2e:
+        requires:
+        - lint
+    - build_web:
+        requires:
+        - test_unit
+        - test_e2e
+    - build_electron:
+        requires:
+        - test_unit
+        - test_e2e
