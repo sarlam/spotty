@@ -1,6 +1,6 @@
 # Spotty
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fsarlam%2Fspotty.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fsarlam%2Fspotty?ref=badge_shield)
-
+[![CircleCI](https://circleci.com/gh/sarlam/spotty/tree/develop.svg?style=svg)](https://circleci.com/gh/sarlam/spotty/tree/develop)
 
 ## Abstract
 
