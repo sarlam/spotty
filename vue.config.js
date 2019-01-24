@@ -2,7 +2,7 @@ const path = require('path')
 
 module.exports = {
   chainWebpack: config => {
-    const IAddIstanbul = process.env.VUE_APP_WITH_ISTANBUL === "true";
+    const IAddIstanbul = process.env.VUE_APP_WITH_ISTANBUL === 'true'
 
     if (IAddIstanbul) {
       config.devtool('eval')
@@ -15,7 +15,7 @@ module.exports = {
         .end()
         .use('istanbul-instrumenter-loader')
         .loader('istanbul-instrumenter-loader')
-        .options({esModules: true})
+        .options({ esModules: true })
     }
   }
-};
+}

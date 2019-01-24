@@ -2,12 +2,11 @@
   <v-app>
     <v-toolbar app>
       <v-toolbar-title class="headline text-uppercase">
-        <span>Vuetify</span>
-        <span class="font-weight-light">MATERIAL DESIGN</span>
+        <span>Spotty</span>
       </v-toolbar-title>
     </v-toolbar>
 
-    <v-content>
+    <v-content ref="main">
       <router-view/>
     </v-content>
   </v-app>
@@ -16,11 +15,6 @@
 <script>
 
 export default {
-  name: 'App',
-  data () {
-    return {
-      //
-    }
-  }
+  name: 'App'
 }
 </script>
