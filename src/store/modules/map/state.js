@@ -3,5 +3,5 @@ export default {
     width: 0,
     height: 0
   },
-  toto: 'salut !!!!'
+  isDragging: false
 }
