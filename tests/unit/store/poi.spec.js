@@ -1,4 +1,5 @@
 import { expect } from 'chai'
+import { cloneDeep } from 'lodash'
 
 import store from '@store'
 
@@ -54,10 +55,9 @@ describe('POI store module', () => {
     store.dispatch(ADD_ACTION, emptyName)
     expect(store.state.poi.list).to.have.length(1)
 
-    emptyName.pos = {x : 1 } // no y
+    emptyName.pos = { x: 1 } // no y
     store.dispatch(ADD_ACTION, emptyName)
     expect(store.state.poi.list).to.have.length(1)
-
   })
 
   it('Should not be able to push an item from the mutation', () => {
@@ -94,7 +94,6 @@ describe('POI store module', () => {
     store.dispatch(DELETE_ACTION, store.state.poi.list[0]._id)
     expect(store.state.poi.list).to.have.length(0)
 
-
     store.dispatch(ADD_ACTION, {
       name: 'test',
       pos: {
@@ -104,7 +103,7 @@ describe('POI store module', () => {
     })
     expect(store.state.poi.list).to.have.length(1)
 
-    store.dispatch(DELETE_ACTION, {_id: 'test'})
+    store.dispatch(DELETE_ACTION, { _id: 'test' })
     expect(store.state.poi.list).to.have.length(1)
     store.dispatch(DELETE_ACTION, 'test')
     expect(store.state.poi.list).to.have.length(1)
@@ -115,22 +114,21 @@ describe('POI store module', () => {
   it('should update the name first POI', () => {
     expect(store.state.poi.list).to.have.length(1)
 
-    const oldObject = _.cloneDeep(store.state.poi.list[0])
+    const oldObject = cloneDeep(store.state.poi.list[0])
     expect(store.state.poi.list[0]).to.deep.equal(oldObject)
-    const newObject = _.cloneDeep(store.state.poi.list[0])
+    const newObject = cloneDeep(store.state.poi.list[0])
     newObject.name = 'a super new different name'
-    newObject.pos = {x: 1337, y: 42}
+    newObject.pos = { x: 1337, y: 42 }
     expect(store.state.poi.list[0]).to.not.deep.equal(newObject)
 
     store.dispatch(UPDATE_ACTION, newObject)
     expect(store.state.poi.list[0]).to.deep.equal(newObject)
-
   })
 
   it('shouldn\'t be able to update a POI malformed', () => {
-    const oldObject = _.cloneDeep(store.state.poi.list[0])
+    const oldObject = cloneDeep(store.state.poi.list[0])
     expect(store.state.poi.list[0]).to.deep.equal(oldObject)
-    const newObject = _.cloneDeep(store.state.poi.list[0])
+    const newObject = cloneDeep(store.state.poi.list[0])
     newObject.name = ''
     expect(store.state.poi.list[0]).to.not.deep.equal(newObject)
 
