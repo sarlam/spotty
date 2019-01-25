@@ -1,3 +1,4 @@
 export default {
-  list: []
+  list: [],
+  selectedPoi: null
 }

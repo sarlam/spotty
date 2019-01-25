@@ -46,5 +46,25 @@ export default {
     if (!_.isUndefined(oldItem)) {
       Object.assign(oldItem, newItem)
     }
+  },
+
+  /**
+   *
+   * @param state
+   * @param {String|{_id:String}} item - stored _id as an Object or String
+   */
+  SELECT_A_POI: (state, item) => {
+    // can be undefined !
+    let _id = _.isObject(item)
+      ? item._id
+      : item
+
+    const selected = _.find(state.list, i => i._id === _id)
+    console.log(selected)
+
+    state.selectedPoi = !_.isEmpty(selected)
+      ? selected
+      : null
+    console.log(selected._id, state.selectedPoi._id, state.list[4]._id)
   }
 }

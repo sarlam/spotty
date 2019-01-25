@@ -63,5 +63,14 @@ export default {
    */
   update ({ commit }, item) {
     if (checkPOIValidity(item)) commit('UPDATE_A_POI', item)
+  },
+
+  /**
+   *
+   * @param commit
+   * @param {String|{_id:String}} item - stored _id as an Object or String
+   */
+  select({commit}, item) {
+    commit('SELECT_A_POI', item)
   }
 }
