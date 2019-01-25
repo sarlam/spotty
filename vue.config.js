@@ -17,5 +17,12 @@ module.exports = {
         .loader('istanbul-instrumenter-loader')
         .options({ esModules: true })
     }
+  },
+  configureWebpack: {
+    resolve: {
+      alias: {
+        '@store': path.resolve(__dirname, 'src/store')
+      }
+    }
   }
 }
