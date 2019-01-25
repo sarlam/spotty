@@ -6,6 +6,7 @@
 
 <script>
 import { mapActions } from 'vuex'
+import mapPath from '@/assets/maps/amsterdam.jpg'
 
 export default {
   name: 's-map-layer',
@@ -17,7 +18,8 @@ export default {
   created () {
     const image = new Image()
     // TODO possible to load another map ?
-    image.src = './img/maps/amsterdam.jpg'
+    image.src = mapPath
+
     image.onload = () => {
       this.afterImageLoad({ width: image.naturalWidth, height: image.naturalHeight })
       this.config.image = image
