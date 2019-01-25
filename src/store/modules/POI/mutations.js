@@ -60,11 +60,9 @@ export default {
       : item
 
     const selected = _.find(state.list, i => i._id === _id)
-    console.log(selected)
 
     state.selectedPoi = !_.isEmpty(selected)
       ? selected
       : null
-    console.log(selected._id, state.selectedPoi._id, state.list[4]._id)
   }
 }
