@@ -9,7 +9,7 @@ export default {
    * @param {Number} size.width -image width
    * @param {Number} size.height -image height
    */
-  afterImageLoad: ({commit}, size) => {
+  afterImageLoad: ({ commit }, size) => {
     commit('SET_IMAGE_SIZE', size)
   },
 
@@ -18,7 +18,7 @@ export default {
    * @param commit
    * @param {Boolean} isDragging - is the user dragging ?
    */
-  setDragging: ({commit}, isDragging) => {
+  setDragging: ({ commit }, isDragging) => {
     commit('SET_DRAGGING', isDragging)
   }
 }

@@ -3,7 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "description": "PWA/Electron application aims to make is easy to spot location on a map and store them",
-  "author": "Paul Jarleton <pro@jarleton.me>",
+  "author": {
+    "name": "Paul Jarleton",
+    "email": "pro@jarleton.me",
+    "url": "https://jarleton.me/"
+  },
   "license": "MIT",
   "scripts": {
     "serve": "vue-cli-service serve --mode web",

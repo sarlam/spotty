@@ -13,5 +13,14 @@ export default {
   SET_STAGE_SIZE: (state, { width, height }) => {
     state.stage.width = width
     state.stage.height = height
+  },
+
+  /**
+   *
+   * @param state
+   * @param {Boolean} isItOpen
+   */
+  SET_ABOUT_MODAL: (state, isItOpen) => {
+    state.aboutModal = isItOpen
   }
 }
