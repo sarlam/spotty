@@ -3,6 +3,7 @@ import { expect } from 'chai'
 import store from '@store'
 
 const ADD_ACTION = 'poi/add'
+const UPDATE_ACTION = 'poi/update'
 const DELETE_ACTION = 'poi/delete'
 
 /* eslint-disable no-unused-expressions */ // expect(...).to.be.true
@@ -109,5 +110,37 @@ describe('POI store module', () => {
     expect(store.state.poi.list).to.have.length(1)
     store.dispatch(DELETE_ACTION, null)
     expect(store.state.poi.list).to.have.length(1)
+  })
+
+  it('should update the name first POI', () => {
+    expect(store.state.poi.list).to.have.length(1)
+
+    const oldObject = _.cloneDeep(store.state.poi.list[0])
+    expect(store.state.poi.list[0]).to.deep.equal(oldObject)
+    const newObject = _.cloneDeep(store.state.poi.list[0])
+    newObject.name = 'a super new different name'
+    newObject.pos = {x: 1337, y: 42}
+    expect(store.state.poi.list[0]).to.not.deep.equal(newObject)
+
+    store.dispatch(UPDATE_ACTION, newObject)
+    expect(store.state.poi.list[0]).to.deep.equal(newObject)
+
+  })
+
+  it('shouldn\'t be able to update a POI malformed', () => {
+    const oldObject = _.cloneDeep(store.state.poi.list[0])
+    expect(store.state.poi.list[0]).to.deep.equal(oldObject)
+    const newObject = _.cloneDeep(store.state.poi.list[0])
+    newObject.name = ''
+    expect(store.state.poi.list[0]).to.not.deep.equal(newObject)
+
+    store.dispatch(UPDATE_ACTION, newObject)
+    expect(store.state.poi.list[0]).to.not.deep.equal(newObject)
+
+    store.dispatch(DELETE_ACTION, oldObject)
+    expect(store.state.poi.list).to.be.empty
+
+    store.dispatch(UPDATE_ACTION, oldObject)
+    expect(store.state.poi.list).to.be.empty
   })
 })

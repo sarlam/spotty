@@ -32,5 +32,19 @@ export default {
       : item
 
     _.remove(state.list, i => i._id === _id)
+  },
+
+  /**
+   *
+   * @param state
+   * @param {Object} newItem - the new item
+   * @param {String} newItem._id - uniqueId
+   */
+  UPDATE_A_POI: (state, newItem) => {
+    const oldItem = _.find(state.list, i => i._id === newItem._id)
+
+    if (!_.isUndefined(oldItem)) {
+      Object.assign(oldItem, newItem)
+    }
   }
 }
