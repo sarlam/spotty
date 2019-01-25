@@ -70,7 +70,16 @@ export default {
    * @param commit
    * @param {String|{_id:String}} item - stored _id as an Object or String
    */
-  select({commit}, item) {
+  select ({ commit }, item) {
     commit('SELECT_A_POI', item)
+  },
+
+  /**
+   * deselect.
+   *
+   * @param commit
+   */
+  deselect ({ commit }) {
+    commit('DESELECT_POI')
   }
 }

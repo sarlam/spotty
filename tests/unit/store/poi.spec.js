@@ -1,5 +1,5 @@
-import {expect} from 'chai'
-import {cloneDeep} from 'lodash'
+import { expect } from 'chai'
+import { cloneDeep } from 'lodash'
 
 import store from '@store'
 
@@ -56,7 +56,7 @@ describe('POI store module', () => {
     store.dispatch(CREATE_ACTION, emptyName)
     expect(store.state.poi.list).to.have.length(1)
 
-    emptyName.pos = {x: 1} // no y
+    emptyName.pos = { x: 1 } // no y
     store.dispatch(CREATE_ACTION, emptyName)
     expect(store.state.poi.list).to.have.length(1)
   })
@@ -104,7 +104,7 @@ describe('POI store module', () => {
     })
     expect(store.state.poi.list).to.have.length(1)
 
-    store.dispatch(DELETE_ACTION, {_id: 'test'})
+    store.dispatch(DELETE_ACTION, { _id: 'test' })
     expect(store.state.poi.list).to.have.length(1)
     store.dispatch(DELETE_ACTION, 'test')
     expect(store.state.poi.list).to.have.length(1)
@@ -119,7 +119,7 @@ describe('POI store module', () => {
     expect(store.state.poi.list[0]).to.deep.equal(oldObject)
     const newObject = cloneDeep(store.state.poi.list[0])
     newObject.name = 'a super new different name'
-    newObject.pos = {x: 1337, y: 42}
+    newObject.pos = { x: 1337, y: 42 }
     expect(store.state.poi.list[0]).to.not.deep.equal(newObject)
 
     store.dispatch(UPDATE_ACTION, newObject)
@@ -145,15 +145,17 @@ describe('POI store module', () => {
 
   describe('Selected Item', () => {
     before(() => {
-      for (let i = 0; i < 10; i++) store.dispatch(CREATE_ACTION,
-        {
-          name: `poi n${i}`,
-          pos: {
-            x: i,
-            y: i
+      for (let i = 0; i < 10; i++) {
+        store.dispatch(CREATE_ACTION,
+          {
+            name: `poi n${i}`,
+            pos: {
+              x: i,
+              y: i
+            }
           }
-        }
-      )
+        )
+      }
     })
 
     it('Should not have any selected item', () => {
@@ -174,9 +176,15 @@ describe('POI store module', () => {
       store.dispatch(SELECT_POI_ACTION, 'no_id_found')
       expect(store.getters['poi/isAPoiSelected']).to.be.true
       expect(store.state.poi.selectedPoi).to.deep.equal(store.state.poi.list[5])
-      store.dispatch(SELECT_POI_ACTION, {id: 'no_id_found'})
+      store.dispatch(SELECT_POI_ACTION, { id: 'no_id_found' })
       expect(store.getters['poi/isAPoiSelected']).to.be.true
       expect(store.state.poi.selectedPoi).to.deep.equal(store.state.poi.list[5])
+    })
+
+    it('Should deselect', () => {
+      expect(store.getters['poi/isAPoiSelected']).to.be.true
+      store.dispatch(DESELCT_POI_ACTION)
+      expect(store.getters['poi/isAPoiSelected']).to.be.false
     })
   })
 })

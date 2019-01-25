@@ -64,5 +64,14 @@ export default {
     state.selectedPoi = !_.isEmpty(selected)
       ? selected
       : state.selectedPoi // do not deselect
+  },
+
+  /**
+   * deselect.
+   *
+   * @param state
+   */
+  DESELECT_POI: (state) => {
+    state.selectedPoi = null
   }
 }
