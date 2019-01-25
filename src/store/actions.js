@@ -11,5 +11,14 @@ export default {
    */
   setStageSize ({ commit }, { width, height }) {
     commit('SET_STAGE_SIZE', { width, height })
+  },
+
+  /**
+   *
+   * @param commit
+   * @param {Boolean} isItOpen
+   */
+  setAboutModal ({ commit }, isItOpen) {
+    commit('SET_ABOUT_MODAL', isItOpen)
   }
 }
