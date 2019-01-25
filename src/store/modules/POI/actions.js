@@ -26,5 +26,15 @@ export default {
 
       commit('ADD_A_POI', storedItem)
     }
+  },
+
+  /**
+   * REMOVE_A_POI mutation accessor.
+   *
+   * @param commit
+   * @param {String|{_id:String}} item - stored _id as an Object or String
+   */
+  delete({commit}, item) {
+    commit('REMOVE_A_POI', item)
   }
 }

@@ -17,5 +17,20 @@ export default {
     if (_.findIndex(state.list, i => i._id === item._id) === -1) {
       state.list.push(item)
     }
+  },
+
+  /**
+   * remove a poi from the list
+   *
+   * @param state
+   * @param {String|{_id:String}} item - stored _id as an Object or String
+   */
+  REMOVE_A_POI: (state, item) => {
+    // can be undefined !
+    let _id = _.isObject(item)
+      ? item._id
+      : item
+
+    _.remove(state.list, i => i._id === _id)
   }
 }
