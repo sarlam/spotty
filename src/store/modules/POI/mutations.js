@@ -63,6 +63,6 @@ export default {
 
     state.selectedPoi = !_.isEmpty(selected)
       ? selected
-      : null
+      : state.selectedPoi // do not deselect
   }
 }

@@ -172,10 +172,11 @@ describe('POI store module', () => {
       expect(store.state.poi.selectedPoi).to.deep.equal(store.state.poi.list[5])
 
       store.dispatch(SELECT_POI_ACTION, 'no_id_found')
-      expect(store.state.poi.selectedPoi).to.not.deep.equal(store.state.poi.list[5])
-      expect(store.getters['poi/isAPoiSelected']).to.be.false
+      expect(store.getters['poi/isAPoiSelected']).to.be.true
+      expect(store.state.poi.selectedPoi).to.deep.equal(store.state.poi.list[5])
       store.dispatch(SELECT_POI_ACTION, {id: 'no_id_found'})
-      expect(store.getters['poi/isAPoiSelected']).to.be.false
+      expect(store.getters['poi/isAPoiSelected']).to.be.true
+      expect(store.state.poi.selectedPoi).to.deep.equal(store.state.poi.list[5])
     })
   })
 })
