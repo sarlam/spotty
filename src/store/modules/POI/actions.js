@@ -17,7 +17,7 @@ export default {
   add ({ commit }, item) {
     const { name, pos } = item
 
-    if (!_.isEmpty(name) && !_.isUndefined(pos)) {
+    if (!_.isEmpty(name) && !_.isUndefined(pos) && _.has(pos, 'x') && _.has(pos, 'y')) {
       const storedItem = {
         _id: _.uniqueId(ID_PREFIX),
         name,
