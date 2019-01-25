@@ -7,6 +7,7 @@ import actions from './actions'
 import plugins from './plugins'
 
 import map from './modules/map'
+import poi from './modules/POI'
 
 Vue.use(Vuex)
 
@@ -16,6 +17,7 @@ export default new Vuex.Store({
   actions,
   plugins,
   modules: {
-    map
+    map,
+    poi
   }
 })

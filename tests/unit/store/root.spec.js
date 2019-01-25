@@ -4,7 +4,7 @@ import store from '@store'
 
 /* eslint-disable no-unused-expressions */ // expect(...).to.be.true
 
-describe('root store test', () => {
+describe('root store', () => {
   /**
    * As This soft was design to be used with vuex-electron primarily we test mostly actions
    */
