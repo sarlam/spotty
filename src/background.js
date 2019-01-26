@@ -6,7 +6,7 @@ import {
   installVueDevtools
 } from 'vue-cli-plugin-electron-builder/lib'
 
-import './store'
+import store from './store'
 
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
@@ -32,12 +32,14 @@ function createWindow () {
   }
 
   win.on('closed', () => {
+    store.dispatch('cleanBeforeClosed')
     win = null
   })
 }
 
 // Quit when all windows are closed.
 app.on('window-all-closed', () => {
+
   // On macOS it is common for applications and their menu bar
   // to stay active until the user quits explicitly with Cmd + Q
   if (process.platform !== 'darwin') {
