@@ -73,5 +73,13 @@ export default {
    */
   DESELECT_POI: (state) => {
     state.selectedPoi = null
+  },
+
+  PUT_IN_EDITION: (state, item) => {
+    state.itemInEdition = item
+  },
+
+  CLEAR_EDITION: (state) => {
+    state.itemInEdition = null
   }
 }

@@ -18,5 +18,9 @@ export default {
    */
   SET_DRAGGING: (state, isDragging) => {
     state.isDragging = isDragging
+  },
+
+  SET_ABSOLUTE: (state, position) => {
+    state.absolute = position
   }
 }
