@@ -1,5 +1,5 @@
 <template>
-  <v-navigation-drawer right absolute v-model="isInEdition">
+  <v-navigation-drawer right absolute v-model="drawerModel">
     <v-toolbar flat>
       <v-list>
         <v-list-tile>
@@ -46,7 +46,14 @@ export default {
   },
   computed: {
     ...mapState('poi', ['itemInEdition']),
-    ...mapGetters('poi', ['isInEdition'])
+    ...mapGetters('poi', ['isInEdition']),
+    drawerModel: {
+      get () {
+        return this.isInEdition
+      },
+      set () {
+      }
+    }
   },
   methods: {
     ...mapActions('poi', ['add']),

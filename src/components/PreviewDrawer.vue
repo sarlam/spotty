@@ -1,5 +1,5 @@
 <template>
-  <v-navigation-drawer absolute v-model="isAPoiSelected">
+  <v-navigation-drawer absolute v-model="drawerModel">
     {{ selectedPoi }}
   </v-navigation-drawer>
 </template>
@@ -11,7 +11,14 @@ export default {
   name: 's-preview-drawer',
   computed: {
     ...mapGetters('poi', ['isAPoiSelected']),
-    ...mapState('poi', ['selectedPoi'])
+    ...mapState('poi', ['selectedPoi']),
+    drawerModel: {
+      get () {
+        return this.isAPoiSelected
+      },
+      set () {
+      }
+    }
   }
 }
 
