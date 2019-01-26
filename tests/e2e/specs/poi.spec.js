@@ -51,6 +51,12 @@ describe('POI', () => {
     cy.get(i.EDITION_DRAWER_FORM_NAME).type('A Super name !')
 
     cy.get(i.BODY).click(secondPoint)
+
+    cy.get(i.CANVAS)
+      .trigger('mousedown', { which: 1, clientX : secondPoint.x, clientY: secondPoint.y })
+      .trigger('mousemove', { clientX: 100, clientY: 100 })
+      .trigger('mouseup', { force: true })
+
     cy.get(i.EDITION_DRAWER_FORM_NAME).invoke('val').should('equal', 'A Super name !')
     cy.get(i.EDITION_DRAWER_WRAPPER).should('be.visible')
   })
