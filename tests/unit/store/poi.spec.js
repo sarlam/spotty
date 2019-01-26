@@ -112,6 +112,16 @@ describe('POI store module', () => {
     expect(store.state.poi.list).to.have.length(1)
   })
 
+  it('Should have formatted the POI to konva', () => {
+    const points = store.getters['poi/konvaPoints']
+    expect(points).to.have.length(1)
+    expect(points[0]).to.have.property('key')
+    expect(points[0]).to.have.property('x')
+    expect(points[0]).to.have.property('y')
+    expect(points[0]).to.have.property('radius')
+    expect(points[0]).to.have.property('fill')
+  })
+
   it('should update the name first POI', () => {
     expect(store.state.poi.list).to.have.length(1)
 
@@ -190,6 +200,72 @@ describe('POI store module', () => {
       expect(store.getters['poi/isAPoiSelected']).to.be.true
       store.dispatch(DESELCT_POI_ACTION)
       expect(store.getters['poi/isAPoiSelected']).to.be.false
+    })
+  })
+
+  describe('Edition', () => {
+    before(() => {
+      store.state.poi.list = []
+
+      for (let i = 0; i < 10; i++) {
+        store.dispatch(CREATE_ACTION,
+          {
+            name: `poi n${i}`,
+            pos: {
+              x: i,
+              y: i
+            }
+          }
+        )
+      }
+    })
+
+    it('Should put a new item in the edition slot', () => {
+      expect(store.getters['poi/isInEdition']).to.be.false
+      expect(store.getters['poi/isAPoiSelected']).to.be.true
+      store.dispatch('poi/create', {
+        x: 0,
+        y: 0
+      })
+
+      expect(store.getters['poi/isInEdition']).to.be.true
+      expect(store.getters['poi/isAPoiSelected']).to.be.false
+
+      expect(store.state.poi.itemInEdition).to.have.property('isCreation')
+      expect(store.state.poi.itemInEdition.name).to.be.empty
+    })
+
+    it('Should unload in edition item', () => {
+      store.dispatch('poi/clearEdition')
+      expect(store.getters['poi/isInEdition']).to.be.false
+      expect(store.getters['poi/isAPoiSelected']).to.be.false
+    })
+
+    it('Should not put in edition point with negative position', () => {
+      store.dispatch('poi/create', { x: 0, y: -3 })
+      expect(store.getters['poi/isInEdition']).to.be.false
+
+      store.dispatch('poi/create', { x: -4, y: 0 })
+      expect(store.getters['poi/isInEdition']).to.be.false
+    })
+
+    it('Should not put in edition point with wrong position', () => {
+      store.dispatch('poi/create', { x: 0 })
+      expect(store.getters['poi/isInEdition']).to.be.false
+
+      store.dispatch('poi/create', { y: 0 })
+      expect(store.getters['poi/isInEdition']).to.be.false
+
+      store.dispatch('poi/create', { x: 'zfeezf', y: 6565 })
+      expect(store.getters['poi/isInEdition']).to.be.false
+
+      store.dispatch('poi/create', { x: 23, y: '15654' })
+      expect(store.getters['poi/isInEdition']).to.be.false
+    })
+
+    it('Should not be possible to put on edition an item without it or in creation', () => {
+      store.dispatch('poi/putInEdition', { name: 'salut', pos: { x: 25, y: 28 } })
+      expect(store.getters['poi/isInEdition']).to.be.false
     })
   })
 })
