@@ -1,29 +1,33 @@
 <template>
-  <v-navigation-drawer v-model="drawerModel"
+  <v-navigation-drawer data-cy="edition-drawer"
+                       v-model="drawerModel"
                        hide-overlay stateless touchless right absolute>
     <v-toolbar flat>
       <h3 class="title"> Edition </h3>
       <v-spacer></v-spacer>
-      <v-btn icon flat @click="clearEdition">
+      <v-btn data-cy="edition-drawer-close-btn"
+             icon flat
+             @click="clearEdition">
         <v-icon>clear</v-icon>
       </v-btn>
     </v-toolbar>
 
     <v-container v-if="isInEdition">
-      <v-form @submit="validateAndStore" ref="editionForm">
+      <v-form data-cy="edition-drawer-form" @submit="validateAndStore" ref="editionForm">
 
-        <v-text-field v-model="itemInEdition.name"
+        <v-text-field data-cy="edition-drawer-form-name"
+                      v-model="itemInEdition.name"
                       :rules="nameRules"
                       label="Name"
                       required></v-text-field>
 
-        <v-btn color="success"
+        <v-btn data-cy="edition-drawer-form-submit"
+               color="success"
                type="submit">
           Validate
         </v-btn>
       </v-form>
     </v-container>
-
   </v-navigation-drawer>
 </template>
 

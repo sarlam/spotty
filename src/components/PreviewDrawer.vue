@@ -1,7 +1,7 @@
 <template>
   <v-navigation-drawer v-model="drawerModel"
                        hide-overlay stateless touchless absolute>
-    {{ selectedPoi }}
+    <div data-cy="preview-drawer">{{ selectedPoi }}</div>
   </v-navigation-drawer>
 </template>
 
