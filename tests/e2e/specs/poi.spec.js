@@ -45,6 +45,7 @@ describe('POI', () => {
     const firstPoint = {x: 400, y: 400}
     const secondPoint = {x: 200, y: 500}
     cy.visit('/')
+    cy.wait(500) // ugly arbitrary wait !
     cy.get(i.EDITION_DRAWER_FORM).should('not.be.visible')
     cy.get(i.BODY).click(firstPoint)
     cy.get(i.EDITION_DRAWER_FORM).should('be.visible')
