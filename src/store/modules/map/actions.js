@@ -1,6 +1,15 @@
 /**
  * PLEASE REMEMBER THAT ACTIONS WILL BE EXECUTED BY THE MAIN PROCESS OF ELECTRON
  */
+import _ from 'lodash'
+
+const isValidAbsolutePosition = (pos) => {
+  return _.has(pos, 'x') &&
+    _.has(pos, 'y') &&
+    pos.x < 1 &&
+    pos.y < 1
+}
+
 export default {
   /**
    *
@@ -20,5 +29,11 @@ export default {
    */
   setDragging: ({ commit }, isDragging) => {
     commit('SET_DRAGGING', isDragging)
+  },
+
+  setAbsolute: ({ commit }, position) => {
+    if (isValidAbsolutePosition(position)) {
+      commit('SET_ABSOLUTE', position)
+    }
   }
 }

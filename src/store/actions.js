@@ -20,5 +20,15 @@ export default {
    */
   setAboutModal ({ commit }, isItOpen) {
     commit('SET_ABOUT_MODAL', isItOpen)
+  },
+
+  /**
+   * called by the main process just before destroying the main window.
+   * clean up the store before storing it for the next application use.
+   *
+   * @param commit
+   */
+  cleanBeforeClosed ({ commit }) {
+    commit('poi/CLEAR_EDITION')
   }
 }

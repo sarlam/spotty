@@ -1,4 +1,5 @@
 export default {
   list: [],
-  selectedPoi: null
+  selectedPoi: null,
+  itemInEdition: null
 }

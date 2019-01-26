@@ -1,6 +1,8 @@
 <template>
   <v-layout :fill-height="true" ref="stage">
-    <s-map></s-map>
+    <s-preview-drawer/>
+    <s-map/>
+    <s-edition-drawer/>
   </v-layout>
 </template>
 
@@ -8,9 +10,11 @@
 import { debounce } from 'lodash'
 import { mapActions } from 'vuex'
 import SMap from '../components/Map'
+import SEditionDrawer from '../components/EditionDrawer'
+import SPreviewDrawer from '../components/PreviewDrawer'
 
 export default {
-  components: { SMap },
+  components: { SPreviewDrawer, SEditionDrawer, SMap },
   mounted () {
     this.onResize() // pretend to resize to set up the size of the canvas
     // TODO take care to load only one Map to reduce the number of resize watcher

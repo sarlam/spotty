@@ -6,7 +6,7 @@ import {
   installVueDevtools
 } from 'vue-cli-plugin-electron-builder/lib'
 
-import './store'
+import store from './store'
 
 const isDevelopment = process.env.NODE_ENV !== 'production'
 
@@ -32,6 +32,7 @@ function createWindow () {
   }
 
   win.on('closed', () => {
+    store.dispatch('cleanBeforeClosed')
     win = null
   })
 }

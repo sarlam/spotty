@@ -1,21 +1,25 @@
 <template>
-  <v-stage data-cy="canvas-stage"
-           :class="{dragging: map.isDragging}"
-           @dragstart="onDragStart"
-           @dragend="onDragEnd"
-           v-if="config.width !== 0 && config.height !== 0"
-           :config="config">
-    <s-map-layer data-cy="canvas-stage-map"></s-map-layer>
-  </v-stage>
+    <v-stage ref="stage"
+             data-cy="canvas-stage"
+             :class="{dragging: map.isDragging}"
+             @dragstart="onDragStart"
+             @dragend="onDragEnd"
+             v-if="config.width !== 0 && config.height !== 0"
+             :config="config">
+      <s-map-layer></s-map-layer>
+      <s-poi-layer></s-poi-layer>
+    </v-stage>
 </template>
 
 <script>
 import { mapState, mapActions } from 'vuex'
 import SMapLayer from './Map/MapLayer'
+import SPoiLayer from './Map/POILayer'
 
 export default {
   name: 's-map',
   components: {
+    SPoiLayer,
     SMapLayer
   },
   data () {
@@ -40,7 +44,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions('map', ['setDragging']),
+    ...mapActions('map', ['setDragging', 'setAbsolute']),
 
     /**
        * Control the dragging next position so that it never goes beyond the image map.
@@ -75,8 +79,9 @@ export default {
     onDragStart () {
       this.setDragging(true)
     },
-    onDragEnd () {
+    onDragEnd (e) {
       this.setDragging(false)
+      this.setAbsolute(e.target.getAbsolutePosition())
     }
   }
 }

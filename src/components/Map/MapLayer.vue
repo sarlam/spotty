@@ -1,11 +1,11 @@
 <template>
   <v-layer>
-    <v-image data-cy="canvas-stage-map-image" :config="config"></v-image>
+    <v-image @click="onClick" :config="config"></v-image>
   </v-layer>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapState, mapGetters } from 'vuex'
 import mapPath from '@/assets/maps/amsterdam.jpg'
 
 export default {
@@ -15,6 +15,11 @@ export default {
       image: null
     }
   }),
+  computed: {
+    ...mapState('map', ['absolute']),
+    ...mapState('poi', ['itemInEdition']),
+    ...mapGetters('poi', ['isAPoiSelected', 'isInEdition'])
+  },
   created () {
     const image = new Image()
     // TODO possible to load another map ?
@@ -26,7 +31,23 @@ export default {
     }
   },
   methods: {
-    ...mapActions('map', ['afterImageLoad'])
+    ...mapActions('map', ['afterImageLoad']),
+    ...mapActions('poi', ['create', 'deselect']),
+    onClick (e) {
+      if (this.isAPoiSelected) {
+        this.deselect()
+      } else if (this.isInEdition) {
+        this.itemInEdition.pos = {
+          x: -this.absolute.x + e.evt.layerX,
+          y: -this.absolute.y + e.evt.layerY
+        }
+      } else {
+        this.create({
+          x: -this.absolute.x + e.evt.layerX,
+          y: -this.absolute.y + e.evt.layerY
+        })
+      }
+    }
   }
 }
 </script>

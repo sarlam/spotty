@@ -11,17 +11,45 @@ const ID_PREFIX = 'poi_'
  * @return {boolean} is it a valid POI
  */
 const checkPOIValidity =
-  POI => !_.isEmpty(POI.name) &&
-    !_.isUndefined(POI.pos) &&
-    _.has(POI.pos, 'x') &&
-    _.has(POI.pos, 'y') &&
-    POI.pos.x >= 0 &&
-    POI.pos.y >= 0
+  POI => (!_.isEmpty(POI.name) || POI.isCreation) &&
+    (_.has(POI, '_id') || POI.isCreation) &&
+    checkPosValidity(POI.pos)
+
+const checkPosValidity = pos => !_.isUndefined(pos) &&
+  _.has(pos, 'x') &&
+  _.has(pos, 'y') &&
+  _.isNumber(pos.x) &&
+  _.isNumber(pos.y) &&
+  pos.x >= 0 &&
+  pos.y >= 0
 
 /**
  * PLEASE REMEMBER THAT ACTIONS WILL BE EXECUTED BY THE MAIN PROCESS OF ELECTRON
  */
 export default {
+
+  create ({ dispatch }, pos) {
+    if (!checkPosValidity(pos)) return
+
+    const newPoint = {
+      name: '',
+      isCreation: true,
+      pos
+    }
+
+    dispatch('putInEdition', newPoint)
+  },
+
+  putInEdition ({ commit }, item) {
+    if (checkPOIValidity(item)) {
+      commit('DESELECT_POI')
+      commit('PUT_IN_EDITION', item)
+    }
+  },
+
+  clearEdition ({ commit }) {
+    commit('CLEAR_EDITION')
+  },
 
   /**
    *
@@ -31,15 +59,17 @@ export default {
    * @param {{x: Number, y: Number}} item.pos
    */
   add ({ commit }, item) {
-    if (checkPOIValidity(item)) {
-      const { name, pos } = item
-      const storedItem = {
-        _id: _.uniqueId(ID_PREFIX),
-        name,
-        pos
-      }
+    const { name, pos } = item
+    const storedItem = {
+      _id: _.uniqueId(ID_PREFIX),
+      name,
+      pos
+    }
 
+    if (checkPOIValidity(storedItem)) {
       commit('ADD_A_POI', storedItem)
+      commit('SELECT_A_POI', storedItem)
+      commit('CLEAR_EDITION')
     }
   },
 
@@ -62,7 +92,11 @@ export default {
    * @param {{x: Number, y: Number}} item.pos
    */
   update ({ commit }, item) {
-    if (checkPOIValidity(item)) commit('UPDATE_A_POI', item)
+    if (checkPOIValidity(item)) {
+      commit('UPDATE_A_POI', item)
+      commit('SELECT_A_POI', item)
+      commit('CLEAR_EDITION')
+    }
   },
 
   /**
