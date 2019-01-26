@@ -43,6 +43,10 @@ export default {
     }
   },
 
+  clearEdition ({ commit }) {
+    commit('CLEAR_EDITION')
+  },
+
   /**
    *
    * @param commit
