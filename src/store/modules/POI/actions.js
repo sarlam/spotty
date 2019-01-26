@@ -104,7 +104,8 @@ export default {
    * @param commit
    * @param {String|{_id:String}} item - stored _id as an Object or String
    */
-  select ({ commit }, item) {
+  select ({ commit, dispatch }, item) {
+    dispatch('clearEdition')
     commit('SELECT_A_POI', item)
   },
 
