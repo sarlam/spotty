@@ -1,4 +1,5 @@
 //// MAIN ~~~~~~~~~~~~~~
+export const BODY = 'body'
 export const CANVAS = '[data-cy="canvas-stage"]'
 
 //// ABOUT ~~~~~~~~~~~~~
