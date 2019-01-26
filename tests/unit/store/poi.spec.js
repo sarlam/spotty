@@ -158,8 +158,13 @@ describe('POI store module', () => {
       }
     })
 
-    it('Should not have any selected item', () => {
+    it('Should have selected the last pushed item', () => {
       expect(store.state.poi.list).to.have.length(10)
+      expect(store.getters['poi/isAPoiSelected']).to.be.true
+    })
+
+    it('Should unselect the last pushed item', () => {
+      store.dispatch(DESELCT_POI_ACTION)
       expect(store.getters['poi/isAPoiSelected']).to.be.false
     })
 
