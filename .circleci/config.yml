@@ -1,0 +1,240 @@
+# Javascript Node CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-javascript/ for more details
+#
+version: 2
+jobs:
+  lint:
+    docker:
+    # specify the version you desire here
+    - image: circleci/node:10.14
+
+    # Specify service dependencies here if necessary
+    # CircleCI maintains a library of pre-built images
+    # documented at https://circleci.com/docs/2.0/circleci-images/
+    # - image: circleci/mongo:3.4.4
+
+    working_directory: ~/repo
+
+    steps:
+    - checkout
+
+    # Download and cache dependencies
+    - restore_cache:
+        keys:
+        - v1-dependencies-{{ checksum "package.json" }}
+        # fallback to using the latest cache if no exact match is found
+        - v1-dependencies-
+
+    - run: yarn install
+
+    - save_cache:
+        paths:
+        - node_modules
+        key: v1-dependencies-{{ checksum "package.json" }}
+
+    - run: yarn lint --mode=production
+
+  pre_test:
+    docker:
+    # specify the version you desire here
+    - image: circleci/node:10.14
+
+    # Specify service dependencies here if necessary
+    # CircleCI maintains a library of pre-built images
+    # documented at https://circleci.com/docs/2.0/circleci-images/
+    # - image: circleci/mongo:3.4.4
+
+    working_directory: ~/repo
+
+    steps:
+    - run:
+        name:  Download cc-test-reporter
+        command: |
+          mkdir -p tmp/
+          curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./tmp/cc-test-reporter
+          chmod +x ./tmp/cc-test-reporter
+    - persist_to_workspace:
+        root: tmp
+        paths:
+        - cc-test-reporter
+
+  test_unit:
+    docker:
+    # specify the version you desire here
+    - image: circleci/node:10.14
+
+    # Specify service dependencies here if necessary
+    # CircleCI maintains a library of pre-built images
+    # documented at https://circleci.com/docs/2.0/circleci-images/
+    # - image: circleci/mongo:3.4.4
+
+    working_directory: ~/repo
+
+    steps:
+    - checkout
+    - attach_workspace:
+        at: ~/repo/tmp
+
+    # Download and cache dependencies
+    - restore_cache:
+        keys:
+        - v1-dependencies-{{ checksum "package.json" }}
+        # fallback to using the latest cache if no exact match is found
+        - v1-dependencies-
+
+    - run: yarn install
+
+    - save_cache:
+        paths:
+        - node_modules
+        key: v1-dependencies-{{ checksum "package.json" }}
+
+    - run: yarn test:unit
+    - run: ./tmp/cc-test-reporter format-coverage -t lcov -o tmp/codeclimate.unit.json coverage/lcov.info
+    - persist_to_workspace:
+        root: tmp
+        paths:
+        - codeclimate.unit.json
+
+  test_e2e:
+    docker:
+    - image: cypress/base:10
+
+    # Specify service dependencies here if necessary
+    # CircleCI maintains a library of pre-built images
+    # documented at https://circleci.com/docs/2.0/circleci-images/
+    # - image: circleci/mongo:3.4.4
+
+    working_directory: ~/repo
+
+    steps:
+    - checkout
+    - attach_workspace:
+        at: ~/repo/tmp
+
+    # Download and cache dependencies
+    - restore_cache:
+        keys:
+        - v1-dependencies-{{ checksum "package.json" }}
+        # fallback to using the latest cache if no exact match is found
+        - v1-dependencies-
+
+    - run: yarn install
+
+    - save_cache:
+        paths:
+        - node_modules
+        key: v1-dependencies-{{ checksum "package.json" }}
+
+    - run: yarn test:e2e --headless --record
+    - run: yarn test:e2e:report
+    - run: ./tmp/cc-test-reporter format-coverage -t lcov -o tmp/codeclimate.e2e.json coverage/lcov.info
+    - persist_to_workspace:
+        root: tmp
+        paths:
+        - codeclimate.e2e.json
+
+  post_test:
+    docker:
+    # specify the version you desire here
+    - image: circleci/node:10.14
+
+    working_directory: ~/repo
+
+    steps:
+    - attach_workspace:
+        at: ~/repo/tmp
+
+    - run:
+        name: Upload coverage results to Code Climate
+        command: |
+          ./tmp/cc-test-reporter sum-coverage tmp/codeclimate.*.json -p 2 -o tmp/codeclimate.total.json
+          ./tmp/cc-test-reporter upload-coverage -i tmp/codeclimate.total.json
+
+  build_web:
+    docker:
+    # specify the version you desire here
+    - image: circleci/node:10.14
+
+    # Specify service dependencies here if necessary
+    # CircleCI maintains a library of pre-built images
+    # documented at https://circleci.com/docs/2.0/circleci-images/
+    # - image: circleci/mongo:3.4.4
+
+    working_directory: ~/repo
+
+    steps:
+    - checkout
+
+    # Download and cache dependencies
+    - restore_cache:
+        keys:
+        - v1-dependencies-{{ checksum "package.json" }}
+        # fallback to using the latest cache if no exact match is found
+        - v1-dependencies-
+
+    - run: yarn install
+
+    - save_cache:
+        paths:
+        - node_modules
+        key: v1-dependencies-{{ checksum "package.json" }}
+
+    - run: yarn build
+
+  build_electron:
+    docker:
+    # specify the version you desire here
+    - image: circleci/node:10.14
+
+    # Specify service dependencies here if necessary
+    # CircleCI maintains a library of pre-built images
+    # documented at https://circleci.com/docs/2.0/circleci-images/
+    # - image: circleci/mongo:3.4.4
+
+    working_directory: ~/repo
+
+    steps:
+    - checkout
+
+    # Download and cache dependencies
+    - restore_cache:
+        keys:
+        - v1-dependencies-{{ checksum "package.json" }}
+        # fallback to using the latest cache if no exact match is found
+        - v1-dependencies-
+
+    - run: yarn install
+
+    - save_cache:
+        paths:
+        - node_modules
+        key: v1-dependencies-{{ checksum "package.json" }}
+
+    - run: yarn electron:build
+
+workflows:
+  version: 2
+  lint_test_build_all:
+    jobs:
+    - lint
+    - pre_test:
+        requires:
+        - lint
+    - test_unit:
+        requires:
+        - pre_test
+    - test_e2e:
+        requires:
+        - pre_test
+    - post_test:
+        requires:
+        - test_unit
+        - test_e2e
+    - build_web:
+        requires:
+        - post_test
+    - build_electron:
+        requires:
+        - post_test

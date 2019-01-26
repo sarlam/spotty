@@ -1,0 +1,3 @@
+describe('Map.vue', () => {
+
+})
