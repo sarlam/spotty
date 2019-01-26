@@ -1,29 +1,24 @@
 <template>
-  <v-navigation-drawer right absolute v-model="drawerModel">
+  <v-navigation-drawer v-model="drawerModel"
+                       hide-overlay stateless touchless right absolute>
     <v-toolbar flat>
-      <v-list>
-        <v-list-tile>
-          <v-list-tile-title class="title">
-            Edition
-          </v-list-tile-title>
-        </v-list-tile>
-      </v-list>
+      <h3 class="title"> Edition </h3>
+      <v-spacer></v-spacer>
+      <v-btn icon flat @click="clearEdition">
+        <v-icon>clear</v-icon>
+      </v-btn>
     </v-toolbar>
 
     <v-container v-if="isInEdition">
       <v-form @submit="validateAndStore" ref="editionForm">
 
-        <v-text-field
-          v-model="itemInEdition.name"
-          :rules="nameRules"
-          label="Name"
-          required
-        ></v-text-field>
+        <v-text-field v-model="itemInEdition.name"
+                      :rules="nameRules"
+                      label="Name"
+                      required></v-text-field>
 
-        <v-btn
-          color="success"
-          type="submit"
-        >
+        <v-btn color="success"
+               type="submit">
           Validate
         </v-btn>
       </v-form>
@@ -56,7 +51,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions('poi', ['add']),
+    ...mapActions('poi', ['add', 'clearEdition', 'update']),
     validateAndStore (e) {
       e.preventDefault()
       if (this.$refs.editionForm.validate()) {

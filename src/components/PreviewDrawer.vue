@@ -1,5 +1,6 @@
 <template>
-  <v-navigation-drawer absolute v-model="drawerModel">
+  <v-navigation-drawer v-model="drawerModel"
+                       hide-overlay stateless touchless absolute>
     {{ selectedPoi }}
   </v-navigation-drawer>
 </template>
