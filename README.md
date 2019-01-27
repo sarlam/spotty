@@ -1,6 +1,13 @@
 # Spotty
+## Status
+
 [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fsarlam%2Fspotty.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fsarlam%2Fspotty?ref=badge_shield)
-[![CircleCI](https://circleci.com/gh/sarlam/spotty/tree/develop.svg?style=svg)](https://circleci.com/gh/sarlam/spotty/tree/develop)
+
+
+[![CircleCI](https://circleci.com/gh/sarlam/spotty/tree/develop.svg?style=svg)](https://circleci.com/gh/sarlam/spotty/tree/develop) - develop
+
+[![CircleCI](https://circleci.com/gh/sarlam/spotty/tree/master.svg?style=svg)](https://circleci.com/gh/sarlam/spotty/tree/master) - master
+
 [![Maintainability](https://api.codeclimate.com/v1/badges/1f3e55ef43d491cb6590/maintainability)](https://codeclimate.com/github/sarlam/spotty/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/1f3e55ef43d491cb6590/test_coverage)](https://codeclimate.com/github/sarlam/spotty/test_coverage)
 
