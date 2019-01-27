@@ -2,10 +2,10 @@
   <v-dialog v-model="warningModal"
             persistent
             width="500">
-    <v-card data-cy="delete-modal-card">
+    <v-card v-if="isAPoiSelected" data-cy="delete-modal-card">
       <v-card-title class="headline grey lighten-2"
                     primary-title>
-        Deleteing ????
+        You are about to delete {{selectedPoi.name}}, there is no turning back, are you sure ?
       </v-card-title>
 
       <v-card-actions>
@@ -13,12 +13,12 @@
         <v-btn data-cy="delete-modal-btn-no"
                color="primary"
                @click="closeModal">
-          NOOOOOO
+          No
         </v-btn>
         <v-btn data-cy="delete-modal-btn-yes"
                color="error"
                @click="deletePoi">
-          YEEEESSS
+          Yes
         </v-btn>
       </v-card-actions>
     </v-card>
@@ -26,13 +26,14 @@
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions, mapGetters } from 'vuex'
 
 export default {
   name: 's-delete-warning-modal',
   computed: {
     ...mapState(['warningModal']),
-    ...mapState('poi', ['selectedPoi'])
+    ...mapState('poi', ['selectedPoi']),
+    ...mapGetters('poi', ['isAPoiSelected'])
   },
   methods: {
     ...mapActions(['setWarningModal']),
