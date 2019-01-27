@@ -59,4 +59,54 @@ describe('POI', () => {
     cy.get(i.EDITION_DRAWER_FORM_NAME).invoke('val').should('equal', 'A Super name !')
     cy.get(i.EDITION_DRAWER_WRAPPER).should('be.visible')
   })
+
+  describe('Preview', () => {
+    it('Should show a preview on click', () => {
+      const firstPoint = { x: 500, y: 200 }
+      const secondPoint = { x: 400, y: 400 }
+      cy.visit('/')
+      cy.window().its('App.$store').then($store => {
+        $store.dispatch('poi/add', { name: 'A Super name !', pos: { x: 500, y: 200 } })
+
+        cy.get(i.PREVIEW_DRAWER_WRAPPER).should('be.visible')
+
+        cy.get(i.CANVAS).click(secondPoint)
+        cy.wait(100)
+
+        cy.get(i.PREVIEW_DRAWER_WRAPPER).should('not.be.visible')
+
+        cy.get(i.CANVAS).click(firstPoint)
+        cy.wait(100)
+        cy.get(i.PREVIEW_DRAWER_WRAPPER).should('be.visible')
+      })
+    })
+    it('As a User I should be warned before deleting a POI', () => {
+      const firstPoint = { x: 500, y: 200 }
+      const secondPoint = { x: 400, y: 400 }
+      cy.visit('/')
+      cy.window().its('App.$store').then($store => {
+        $store.dispatch('poi/add', { name: 'A Super name !', pos: { x: 500, y: 200 } })
+
+        cy.get(i.PREVIEW_DRAWER_WRAPPER).should('be.visible')
+
+        cy.get(i.CANVAS).click(secondPoint)
+        cy.wait(100)
+
+        cy.get(i.PREVIEW_DRAWER_WRAPPER).should('not.be.visible')
+
+        cy.get(i.CANVAS).click(firstPoint)
+        cy.wait(100)
+        cy.get(i.PREVIEW_DRAWER_WRAPPER).should('be.visible')
+
+        cy.get(i.PREVIEW_DRAWER_DELETE_BTN).should('be.visible').click()
+
+        cy.get(i.DELETE_MODAL).should('be.visible')
+
+        cy.get(i.DELETE_MODAL_NO_BTN).click()
+        cy.get(i.DELETE_MODAL).should('not.be.visible')
+        cy.get(i.PREVIEW_DRAWER_DELETE_BTN).should('be.visible').click()
+        cy.get(i.DELETE_MODAL).should('be.visible')
+      })
+    })
+  })
 })

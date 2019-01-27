@@ -102,6 +102,7 @@ export default {
   /**
    *
    * @param commit
+   * @param dispatch
    * @param {String|{_id:String}} item - stored _id as an Object or String
    */
   select ({ commit, dispatch }, item) {

@@ -5,6 +5,17 @@
 
     <v-toolbar data-cy="preview-drawer" class="all-events" v-if="drawerModel">
       <h2>{{selectedPoi.name}}</h2>
+
+      <v-btn @click="openWarningModal"
+             color="red darken-1"
+             data-cy="preview-drawer-delete-btn"
+             dark
+             right
+             bottom
+             absolute
+             fab>
+        <v-icon>delete_forever</v-icon>
+      </v-btn>
     </v-toolbar>
 
     <!--<v-speed-dial
@@ -56,7 +67,7 @@
 </template>
 
 <script>
-import { mapState, mapGetters } from 'vuex'
+import { mapState, mapGetters, mapActions } from 'vuex'
 
 export default {
   name: 's-preview-drawer',
@@ -69,6 +80,12 @@ export default {
       },
       set () {
       }
+    }
+  },
+  methods: {
+    ...mapActions(['setWarningModal']),
+    openWarningModal () {
+      this.setWarningModal(true)
     }
   }
 }
