@@ -31,7 +31,10 @@ export default {
       ? item._id
       : item
 
-    _.remove(state.list, i => i._id === _id)
+    const index = _.findIndex(state.list, i => i._id === _id)
+    if (index !== -1) {
+      state.list.splice(index, 1)
+    }
   },
 
   /**
