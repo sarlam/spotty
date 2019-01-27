@@ -2,8 +2,8 @@ import * as i from '../helpers/getters'
 
 describe('POI', () => {
   it('As a user I can create a new POI', () => {
-    const firstPoint = {x: 500, y: 200}
-    const secondPoint = {x: 400, y: 400}
+    const firstPoint = { x: 500, y: 200 }
+    const secondPoint = { x: 400, y: 400 }
     cy.visit('/')
     cy.get(i.EDITION_DRAWER_FORM).should('not.be.visible')
     cy.get(i.BODY).click(firstPoint)
@@ -25,7 +25,6 @@ describe('POI', () => {
     cy.get(i.EDITION_DRAWER_FORM).should('not.be.visible')
     cy.get(i.PREVIEW_DRAWER_WRAPPER).should('be.visible')
 
-
     cy.get(i.BODY).click(secondPoint)
     cy.get(i.PREVIEW_DRAWER_WRAPPER).should('not.be.visible')
 
@@ -38,12 +37,11 @@ describe('POI', () => {
 
     cy.get(i.BODY).click(secondPoint)
     cy.get(i.EDITION_DRAWER_FORM).should('be.visible')
-
   })
 
   it('Should change the position of the new POI during creation', () => {
-    const firstPoint = {x: 400, y: 400}
-    const secondPoint = {x: 200, y: 500}
+    const firstPoint = { x: 400, y: 400 }
+    const secondPoint = { x: 200, y: 500 }
     cy.visit('/')
     cy.wait(500) // ugly arbitrary wait !
     cy.get(i.EDITION_DRAWER_FORM).should('not.be.visible')
@@ -54,7 +52,7 @@ describe('POI', () => {
     cy.get(i.BODY).click(secondPoint)
 
     cy.get(i.CANVAS)
-      .trigger('mousedown', { which: 1, clientX : secondPoint.x, clientY: secondPoint.y })
+      .trigger('mousedown', { which: 1, clientX: secondPoint.x, clientY: secondPoint.y })
       .trigger('mousemove', { clientX: 100, clientY: 100 })
       .trigger('mouseup', { force: true })
 
