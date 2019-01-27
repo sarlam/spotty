@@ -111,6 +111,17 @@ describe('POI', () => {
         cy.get(i.DELETE_MODAL).should('not.be.visible')
         cy.get(i.PREVIEW_DRAWER_DELETE_BTN).should('be.visible').click()
         cy.get(i.DELETE_MODAL).should('be.visible')
+        cy.get(i.DELETE_MODAL_YES_BTN).click()
+        cy.wait(500)
+
+        cy.get(i.DELETE_MODAL).should('not.be.visible')
+        cy.get(i.PREVIEW_DRAWER_WRAPPER).should('not.be.visible')
+
+        cy.get(i.CANVAS).click(firstPoint)
+        cy.wait(500)
+
+        cy.get(i.PREVIEW_DRAWER_WRAPPER).should('not.be.visible')
+        cy.get(i.EDITION_DRAWER_FORM).should('be.visible')
       })
     })
   })

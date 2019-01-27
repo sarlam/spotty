@@ -21,3 +21,4 @@ export const PREVIEW_DRAWER_DELETE_BTN = '[data-cy="preview-drawer-delete-btn"]'
 /// / DELETE WARNING ~~~~
 export const DELETE_MODAL = '[data-cy="delete-modal-card"]'
 export const DELETE_MODAL_NO_BTN = '[data-cy="delete-modal-btn-no"]'
+export const DELETE_MODAL_YES_BTN = '[data-cy="delete-modal-btn-yes"]'

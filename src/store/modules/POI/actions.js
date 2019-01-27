@@ -81,6 +81,8 @@ export default {
    */
   delete ({ commit }, item) {
     commit('REMOVE_A_POI', item)
+    commit('SET_WARNING_MODAL', false, { root: true })
+    commit('DESELECT_POI')
   },
 
   /**
