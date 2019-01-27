@@ -1,6 +1,5 @@
 <template>
   <v-dialog v-model="warningModalModel"
-            persistent
             width="500">
     <v-card v-if="isAPoiSelected" data-cy="delete-modal-card">
       <v-card-title class="headline grey lighten-2"
@@ -38,7 +37,8 @@ export default {
       get () {
         return this.warningModal
       },
-      set () {
+      set (val) {
+        this.setWarningModal(val)
       }
     }
   },
