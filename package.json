@@ -1,6 +1,6 @@
 {
   "name": "spotty",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "private": true,
   "description": "PWA/Electron application aims to make is easy to spot location on a map and store them",
   "author": {
