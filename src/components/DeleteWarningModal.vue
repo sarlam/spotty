@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="warningModal"
+  <v-dialog v-model="warningModalModel"
             persistent
             width="500">
     <v-card v-if="isAPoiSelected" data-cy="delete-modal-card">
@@ -33,7 +33,14 @@ export default {
   computed: {
     ...mapState(['warningModal']),
     ...mapState('poi', ['selectedPoi']),
-    ...mapGetters('poi', ['isAPoiSelected'])
+    ...mapGetters('poi', ['isAPoiSelected']),
+    warningModalModel: {
+      get () {
+        return this.warningModal
+      },
+      set () {
+      }
+    }
   },
   methods: {
     ...mapActions(['setWarningModal']),
