@@ -24,6 +24,7 @@ export default {
    *
    * @param state
    * @param {String|{_id:String}} item - stored _id as an Object or String
+   * @return {Number} - -1 if nothing removed, else positive number
    */
   REMOVE_A_POI: (state, item) => {
     // can be undefined !
@@ -31,7 +32,11 @@ export default {
       ? item._id
       : item
 
-    _.remove(state.list, i => i._id === _id)
+    const index = _.findIndex(state.list, i => i._id === _id)
+    if (index !== -1) {
+      state.list.splice(index, 1)
+    }
+    // TODO : handle item not found.
   },
 
   /**

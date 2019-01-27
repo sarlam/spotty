@@ -10,9 +10,12 @@ import 'roboto-fontface/css/roboto/roboto-fontface.css'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
 
 Vue.config.productionTip = false
+const isE2E = process.env.VUE_APP_IS_E2E || false
 
-new Vue({
+const vue = new Vue({
   router,
   store,
   render: h => h(App)
 }).$mount('#app')
+
+if (isE2E) window.App = vue // attach the window to access the store from e2e

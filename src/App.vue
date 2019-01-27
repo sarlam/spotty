@@ -20,16 +20,18 @@
       <router-view/>
     </v-content>
     <s-about-modal></s-about-modal>
+    <s-delete-warning-modal/>
   </v-app>
 </template>
 
 <script>
 import { mapActions } from 'vuex'
 import SAboutModal from './components/About'
+import SDeleteWarningModal from './components/DeleteWarningModal'
 
 export default {
   name: 'App',
-  components: { SAboutModal },
+  components: { SDeleteWarningModal, SAboutModal },
   methods: {
     ...mapActions(['setAboutModal']),
     openAboutModal () {

@@ -3,5 +3,6 @@ export default {
     width: 0,
     height: 0
   },
-  aboutModal: false
+  aboutModal: false,
+  warningModal: false
 }

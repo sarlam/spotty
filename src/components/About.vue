@@ -1,6 +1,6 @@
 <template>
   <div class="text-xs-center">
-    <v-dialog v-model="aboutModal"
+    <v-dialog v-model="aboutModalModel"
               width="500">
       <v-card>
         <v-card-title class="headline grey lighten-2"
@@ -32,7 +32,7 @@
               <div slot="header">material-design-icons-iconfont</div>
               <v-card>
                 <v-card-text class="text-sm-center">
-                Under <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a>
+                  Under <a href="http://www.apache.org/licenses/LICENSE-2.0">Apache License 2.0</a>
                 </v-card-text>
               </v-card>
             </v-expansion-panel-content>
@@ -67,7 +67,15 @@ export default {
     }
   },
   computed: {
-    ...mapState(['aboutModal'])
+    ...mapState(['aboutModal']),
+    aboutModalModel: {
+      get () {
+        return this.aboutModal
+      },
+      set (val) {
+        this.setAboutModal(val)
+      }
+    }
   },
   methods: {
     ...mapActions(['setAboutModal']),

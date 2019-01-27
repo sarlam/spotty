@@ -23,6 +23,18 @@ export default {
   },
 
   /**
+   *
+   * @param commit
+   * @param getters
+   * @param {Boolean} isItOpen
+   */
+  setWarningModal ({ commit, getters }, isItOpen) {
+    if (getters['poi/isAPoiSelected']) {
+      commit('SET_WARNING_MODAL', isItOpen)
+    }
+  },
+
+  /**
    * called by the main process just before destroying the main window.
    * clean up the store before storing it for the next application use.
    *

@@ -22,5 +22,14 @@ export default {
    */
   SET_ABOUT_MODAL: (state, isItOpen) => {
     state.aboutModal = isItOpen
+  },
+
+  /**
+   *
+   * @param state
+   * @param {Boolean} isItOpen
+   */
+  SET_WARNING_MODAL: (state, isItOpen) => {
+    state.warningModal = isItOpen
   }
 }

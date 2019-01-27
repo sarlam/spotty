@@ -79,8 +79,10 @@ describe('POI store module', () => {
 
   it('Should remove the previous registered POI', () => {
     expect(store.state.poi.list).to.have.length(1)
+    expect(store.getters['poi/konvaPoints']).to.have.length(1)
     store.dispatch(DELETE_ACTION, store.state.poi.list[0])
     expect(store.state.poi.list).to.have.length(0)
+    expect(store.getters['poi/konvaPoints']).to.have.length(0)
 
     store.dispatch(CREATE_ACTION, {
       name: 'test',
